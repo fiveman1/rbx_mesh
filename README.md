@@ -32,6 +32,9 @@ match versioned_mesh{
 	},
 	Mesh::V4(mesh)=>println!("{:?}",mesh.vertices),
 	Mesh::V5(mesh)=>println!("{:?}",mesh.vertices),
+	Mesh::V7(mesh)=>if let Some(core_mesh)=mesh.core_mesh(){
+		println!("{:?}",core_mesh.decode().unwrap().vertices)
+	},
 }
 # binrw::BinResult::Ok(())
 ```

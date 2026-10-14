@@ -16,6 +16,7 @@ default = [
 	"union-graphics",
 	"union-physics",
 	"mesh-v1",
+	"mesh-v7-draco",
 	"csgphs-v8-zstd",
 ]
 mesh = []
@@ -24,12 +25,15 @@ union-physics = []
 
 # mesh v1 is rare and depends on regex
 mesh-v1 = ["mesh", "dep:regex"]
+# most mesh v7 files compress their vertices and faces with Draco, which this decodes (pure Rust)
+mesh-v7-draco = ["mesh", "dep:draco-core"]
 # union physics v8 depends on zstd, pick your poison
 csgphs-v8-zstd = ["union-physics", "dep:zstd"] # non-rust dependency
 csgphs-v8-ruzstd = ["union-physics", "dep:ruzstd"] # 3.5x slower than zstd
 
 [dependencies]
 binrw = "0.15.0"
+draco-core = { version = "2.3.2", default-features = false, features = ["decoder"], optional = true }
 regex = { version = "1.11.3", default-features = false, optional = true }
 ruzstd = { version = "0.8.2", default-features = false, optional = true, features = ["std"] }
 zstd = { version = "0.13.3", default-features = false, optional = true }
